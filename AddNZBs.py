@@ -39,7 +39,7 @@ except ImportError:
 	from xmlrpc.client import ServerProxy # python 3
 
 # addLocalFileToNZBGet function
-def addLocalFileToNZBGet(filename, path, category = '', password = ''):
+def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
     host = os.environ['NZBOP_CONTROLIP'];
     port = os.environ['NZBOP_CONTROLPORT'];
     username = os.environ['NZBOP_CONTROLUSERNAME'];
