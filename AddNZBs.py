@@ -53,7 +53,7 @@ def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
     # Create remote server object
     server = ServerProxy(rpcUrl)
 
-    # read the nzb file
+    # read the NZB file
     file = open(path, 'r') 
     nzb = file.read()
     file.close()
@@ -97,7 +97,7 @@ for r, d, f in os.walk(os.environ.get('NZBPP_DIRECTORY')):
             else:
                 # if not, set the category to empty
                 nzbcategory = ''
-            # push the nzb file to NZBGet
+            # push the NZB file to NZBGet
             nzbid = addLocalFileToNZBGet(nzbname + '.nzb', nzbpath, nzbcategory, nzbpassword)
             # check if the push was successfull
             if nzbid:
@@ -108,7 +108,7 @@ for r, d, f in os.walk(os.environ.get('NZBPP_DIRECTORY')):
                 try:
                     os.remove(nzbpath)
                 except Exception, e:
-                    print '[WARNING] Cannot delete nzb file "' + nzbpath + '". Error: ' + str(e)
+                    print '[WARNING] Cannot delete NZB file "' + nzbpath + '". Error: ' + str(e)
             else:
                 # in not, print an error message
                 error = error + 1
@@ -122,9 +122,9 @@ for r, d, f in os.walk(os.environ.get('NZBPP_DIRECTORY')):
 
 if success or error:
     if success:
-        print '[INFO] ' + str(success) + ' nzb file(s) successfully added to the queue.'
+        print '[INFO] ' + str(success) + ' NZB file(s) successfully added to the queue.'
     if error:
-        print '[ERROR] ' + str(error) + ' nzb file(s) failed to be added to the queue.'
+        print '[ERROR] ' + str(error) + ' NZB file(s) failed to be added to the queue.'
     if error and not success:
         sys.exit(94)
     else:
