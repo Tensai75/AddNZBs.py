@@ -5,7 +5,6 @@
 If the current NZB download being processed by this script contains NZB files they will be pushed to the NZBGet queue.
 
 If the NZB file names do include an unpack password in the format nzbname{{password}}.nzb the password will be passed over to NZBGet when pushing the NZB file to NZBGet.
-If the NZB file names do not include an unpack password but the currently processed NZB download was assigned an unpack password, this password will be passed over to NZBGet instead.
 
 If a category was assigned to the currently processed NZB download, this category will be passed over to NZBGet as well.
 
