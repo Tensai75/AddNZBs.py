@@ -27,19 +27,29 @@
 import sys
 import os
 import re
-import shutil
 import base64
 from urllib.request import quote
 from xmlrpc.client import ServerProxy
 
 # addLocalFileToNZBGet function
 def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
-    host = os.environ['NZBOP_CONTROLIP'];
-    port = os.environ['NZBOP_CONTROLPORT'];
-    username = os.environ['NZBOP_CONTROLUSERNAME'];
-    password = os.environ['NZBOP_CONTROLPASSWORD'];
-
+    # Get the info for the XML-RPC requests
+    host = os.environ.get('NZBOP_CONTROLIP');
+    port = os.environ.get('NZBOP_CONTROLPORT');
+    username = os.environ.get('NZBOP_CONTROLUSERNAME');
+    password = os.environ.get('NZBOP_CONTROLPASSWORD');
+    
     if host == '0.0.0.0': host = '127.0.0.1'
+
+    # Append variables
+    priority = 0
+    addToTop = True
+    addPaused = False
+
+    # DupeCheck variables
+    dupekey = ''
+    dupescore = 0
+    dupemode = 'FORCE'
 
     # Build a URL for XML-RPC requests
     rpcUrl = 'http://%s:%s@%s:%s/xmlrpc' % (quote(username), quote(password), host, port);
@@ -53,11 +63,13 @@ def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
     file.close()
 
     # Call remote method 'append'
-    nzbid = server.append(filename, base64.b64encode(nzb.encode('utf8')).decode('ascii'), category, 0, True, False, '', 0, 'SCORE', [('*unpack:password', nzbpassword)])
+    nzbid = server.append(filename, base64.b64encode(nzb.encode('utf8')).decode('ascii'), category, priority, addToTop, addPaused, dupekey, dupescore, dupemode, [('*unpack:password', nzbpassword)])
     return str(nzbid)
 
 success = 0
 error = 0
+
+print('[INFO] Scanning for NZB files.')
 
 # walk through all downloaded files
 # r=root, d=directories, f = files
