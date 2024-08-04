@@ -1,0 +1,31 @@
+{
+    "main": "AddNZBs.py",
+    "name": "AddNZBs",
+    "homepage": "https://github.com/nzbgetcom/Extension-AddNZBs",
+    "kind": "POST-PROCESSING",
+    "displayName": "Add NZBs",
+    "version": "1.0",
+    "nzbgetMinVersion": "23.0",
+    "author": "ТΞNSΛI",
+    "license": "MIT",
+    "about": "Automatically detects NZB files in the download and adds them to the NZBGet queue.",
+    "queueEvents": "",
+    "requirements": [
+        "This script requires Python 3.x to be installed on your system"
+    ],
+    "description": [
+        "If the current download being processed by this script",
+        "contains NZB files they will be pushed to the NZBGet queue.",
+        "If the NZB file names do include an unpack password",
+        "in the format nzbname{{password}}.nzb the password will",
+        "be passed over to NZBGet when pushing the NZB file to NZBGet.",
+        "If a category was assigned to the currently processed download,",
+        "this category will be passed over to NZBGet as well.",
+        "After the NZB files have been pushed to NZBGet they will be",
+        "deleted from the download directory and if this results",
+        "in an empty directory it will be deleted as well."
+    ],
+    "options": [],
+    "commands": [],
+    "taskTime": ""
+}
