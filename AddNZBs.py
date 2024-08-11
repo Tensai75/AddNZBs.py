@@ -83,8 +83,12 @@ def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
     file.close()
 
     # Call remote method 'append'
-    nzbid = server.append(filename, base64.b64encode(nzb.encode('utf8')).decode('ascii'), category, priority, addToTop, addPaused, dupekey, dupescore, dupemode, [('*unpack:password', nzbpassword)])
-    return nzbid
+    try:
+        nzbid = server.append(filename, base64.b64encode(nzb.encode('utf8')).decode('ascii'), category, priority, addToTop, addPaused, dupekey, dupescore, dupemode, [('*unpack:password', nzbpassword)])
+        return nzbid
+    except Exception as e:
+        print('[ERROR] Error while connecting to NZBGet: ' + str(e))
+        return 0
 
 success = 0
 error = 0
