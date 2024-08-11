@@ -78,9 +78,14 @@ def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
     server = ServerProxy(rpcUrl)
 
     # read the NZB file
-    file = open(path, 'r') 
-    nzb = file.read()
-    file.close()
+    nzb = ''
+    try:
+        file = open(path, 'r') 
+        nzb = file.read()
+        file.close()
+    except Exception as e:
+        print('[ERROR] Unable to read NZB file ' + path + '. Error: ' + str(e))
+        return 0
 
     # Call remote method 'append'
     try:
