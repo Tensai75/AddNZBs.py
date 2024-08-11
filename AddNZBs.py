@@ -72,15 +72,15 @@ error = 0
 print('[INFO] Scanning for NZB files.')
 
 # walk through all downloaded files
-# r=root, d=directories, f = files
+# r=root, d=directories, f=files
 for r, d, f in os.walk(os.environ.get('NZBPP_DIRECTORY')):
     for file in f:
+        # Analyse the file name components
+        nzbfile = re.search(r'^(.+?)(\{\{(.+)\}\})?\.nzb$', file, re.IGNORECASE)
         # if the file is a NZB file
-        if re.search(r'^(.+?)(\{\{(.+)\}\})?\.nzb$', file):
+        if nzbfile:
             #set the full path to the nzb file
             nzbpath = os.path.join(r, file)
-            # Analyse the file name components
-            nzbfile = re.search(r'^(.+?)(\{\{(.+)\}\})?\.nzb$', file)
             # get the name without password
             nzbname = nzbfile.group(1)
             print('[INFO] Found NZB file "' + nzbname + '"')
