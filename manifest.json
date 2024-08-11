@@ -14,41 +14,55 @@
         "This script requires Python 3.x to be installed on your system"
     ],
     "description": [
-      "If the current download being processed by this script contains NZB files they will be pushed to the NZBGet queue.",
-      "If the NZB file names do include an unpack password in the format nzbname{{password}}.nzb the password will be passed over to NZBGet when pushing the NZB file to NZBGet.",
-      "If a category was assigned to the currently processed download, this category will be passed over to NZBGet as well.",
-      "After the NZB files have been pushed to NZBGet they will be deleted from the download directory and if this results in an empty directory it will be deleted as well."
-  ],
+        "If the current download being processed by the script contains NZB files they will be pushed to the NZBGet queue.",
+        "If the NZB file names do include an unpack password in the format nzbname{{password}}.nzb the password will be passed over to NZBGet when pushing the NZB file to NZBGet.",
+        "If a category was assigned to the currently processed download, this category will be passed over to NZBGet as well.",
+        "After the NZB files have been pushed to NZBGet they can optionally be deleted from the download folder and if this results in empty folders they can optionally be deleted as well."
+    ],
     "options": [
-    {
-      "name": "AddToTop",
-      "displayName": "AddToTop",
-      "value": "no",
-      "description": ["Defines if NZB files are added to the top of the queue."],
-      "select": ["yes", "no"]
-    },
-	{
-      "name": "AddPaused",
-      "displayName": "AddPaused",
-      "value": "no",
-      "description": ["Defines if NZB files are added to the queue as paused."],
-      "select": ["yes", "no"]
-    },
-    {
-      "name": "Priority",
-      "displayName": "Priority",
-      "value": "normal",
-      "description": ["Defines the priority of the added NZB files."],
-      "select": ["very low", "low", "normal", "high", "very high", "force"]
-    },
-    {
-      "name": "DupeMode",
-      "displayName": "DupeMode",
-      "value": "force",
-      "description": ["Defines the duplicate mode for the added NZB files."],
-      "select": ["score", "force", "all"]
-    }
-  ],
+        {
+            "name": "AddToTop",
+            "displayName": "Add to top",
+            "value": "no",
+            "description": ["If set to Yes, the NZB files are added to the top of the queue."],
+            "select": ["yes", "no"]
+        },
+        {
+            "name": "AddPaused",
+            "displayName": "Add as paused",
+            "value": "no",
+            "description": ["If set to Yes, the NZB files are added to the queue as paused."],
+            "select": ["yes", "no"]
+        },
+        {
+            "name": "Priority",
+            "displayName": "Priority",
+            "value": "normal",
+            "description": ["Sets the priority for the added NZB files."],
+            "select": ["very low", "low", "normal", "high", "very high", "force"]
+        },
+        {
+            "name": "DupeMode",
+            "displayName": "Duplicate Mode",
+            "value": "force",
+            "description": ["Sets the duplicate mode for the added NZB files."],
+            "select": ["score", "force", "all"]
+        },
+        {
+            "name": "DelAddedNZBs",
+            "displayName": "Delete added NZBs",
+            "value": "no",
+            "description": ["If set to Yes, NZB files which were added to the queue are deleted from the download folder."],
+            "select": ["yes", "no"]
+        },
+        {
+            "name": "DelEmptyFolders",
+            "displayName": "Delete empty folders",
+            "value": "no",
+            "description": ["If set to Yes, folders that are empty after deleting the NZB files are also deleted."],
+            "select": ["yes", "no"]
+        }
+    ],
     "commands": [],
     "taskTime": ""
 }

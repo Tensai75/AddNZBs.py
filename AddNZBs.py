@@ -5,19 +5,19 @@
 # Add downloaded NZB files to NZBGet
 #
 #  
-# If the current NZB download being processed by this script contains NZB
+# If the current download being processed by the script contains NZB
 # files they will be pushed to the NZBGet queue.
 #  
 # If the NZB file names do include an unpack password in the format
 # nzbname{{password}}.nzb the password will be passed over to NZBGet when 
 # pushing the NZB file to NZBGet.
 #  
-# If a category was assigned to the currently processed NZB download, this
+# If a category was assigned to the currently processed download, this
 # category will be passed over to NZBGet as well.
 #  
-# After the NZB files have been pushed to NZBGet they will be deleted from the
-# download directory and if this results in an empty directory it will be
-# deleted as well.
+# After the NZB files have been pushed to NZBGet they can optionally be
+# deleted from the download folder and if this results in empty folders
+# they can optionally be deleted as well.
 #  
 # NOTE: This script requires Python 3.x to be installed on your system.
 
@@ -46,6 +46,10 @@ yesNo = {
     "yes": True,
     "no": False
 }
+
+# delete options
+delAddedNzbs = yesNo[os.environ.get('NZBOP_ADDNZBS_DELADDEDNZBS', "no")]
+delEmptyFolders = yesNo[os.environ.get('NZBOP_ADDNZBS_DELEMPTYFOLDERS', "no")]
 
 # addLocalFileToNZBGet function
 def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
@@ -122,20 +126,23 @@ for r, d, f in os.walk(os.environ.get('NZBPP_DIRECTORY')):
                 success = success + 1
                 print('[INFO] NZB file "' + nzbname + '" successfully added to the queue.')
                 # and delete the NZB file
-                try:
-                    os.remove(nzbpath)
-                except Exception as e:
-                    print('[WARNING] Cannot delete NZB file "' + nzbpath + '". Error: ' + str(e))
+                if delAddedNzbs:
+                    try:
+                        os.remove(nzbpath)
+                        print('[INFO] NZB file "' + nzbname + '" successfully deleted from the download folder.')
+                    except Exception as e:
+                        print('[WARNING] Cannot delete NZB file "' + nzbpath + '". Error: ' + str(e))
+                    # if the current folder is now empty, try to delete it
+                    if delEmptyFolders and not os.listdir(r):
+                        try:
+                            os.rmdir(r)
+                            print('[INFO] Empty folder "' + r + '" successfully deleted.')
+                        except Exception as e:
+                            print('[WARNING] Cannot delete empty folder "' + r + '". Error: ' + str(e))
             else:
-                # in not, print an error message
+                # if not, print an error message
                 error = error + 1
                 print('[ERROR] Unable to add NZB file "' + nzbname + '" to the queue.')
-            # if the current directory is now empty, try to delete it
-            if not os.listdir(r):
-                try:
-                    os.rmdir(r)
-                except Exception as e:
-                    print('[WARNING] Cannot delete empty directory "' + r + '". Error: ' + str(e))
 
 if success or error:
     if success:
