@@ -31,6 +31,22 @@ import base64
 from urllib.request import quote
 from xmlrpc.client import ServerProxy
 
+# priorities options
+priorities = {
+    "very low": -100,
+    "low": -50,
+    "normal": 0,
+    "high": 50,
+    "very high": 100,
+    "force": 900
+}
+
+# yes or no options
+yesNo = {
+    "yes": True,
+    "no": False
+}
+
 # addLocalFileToNZBGet function
 def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
     # Get the info for the XML-RPC requests
@@ -42,14 +58,14 @@ def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
     if host == '0.0.0.0': host = '127.0.0.1'
 
     # Append variables
-    priority = 0
-    addToTop = True
-    addPaused = False
+    priority = priorities[os.environ.get('NZBOP_ADDNZBS_PRIORITY', "normal")]
+    addToTop = yesNo[os.environ.get('NZBOP_ADDNZBS_ADDTOTOP', "no")]
+    addPaused = yesNo[os.environ.get('NZBOP_ADDNZBS_ADDPAUSED', "no")]
 
     # DupeCheck variables
     dupekey = ''
     dupescore = 0
-    dupemode = 'FORCE'
+    dupemode = os.environ.get('NZBOP_ADDNZBS_DUPEMODE', "force").upper()
 
     # Build a URL for XML-RPC requests
     rpcUrl = 'http://%s:%s@%s:%s/xmlrpc' % (quote(username), quote(password), host, port);
