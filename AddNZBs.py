@@ -80,7 +80,7 @@ def addLocalFileToNZBGet(filename, path, category = '', nzbpassword = ''):
 
     # Call remote method 'append'
     nzbid = server.append(filename, base64.b64encode(nzb.encode('utf8')).decode('ascii'), category, priority, addToTop, addPaused, dupekey, dupescore, dupemode, [('*unpack:password', nzbpassword)])
-    return str(nzbid)
+    return nzbid
 
 success = 0
 error = 0
@@ -117,7 +117,7 @@ for r, d, f in os.walk(os.environ.get('NZBPP_DIRECTORY')):
             # push the NZB file to NZBGet
             nzbid = addLocalFileToNZBGet(nzbname + '.nzb', nzbpath, nzbcategory, nzbpassword)
             # check if the push was successfull
-            if nzbid:
+            if nzbid > 0:
                 # if yes, print a success message
                 success = success + 1
                 print('[INFO] NZB file "' + nzbname + '" successfully added to the queue.')
