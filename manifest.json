@@ -4,7 +4,7 @@
     "homepage": "https://github.com/nzbgetcom/Extension-AddNZBs",
     "kind": "POST-PROCESSING",
     "displayName": "Add NZBs",
-    "version": "1.0",
+    "version": "1.1",
     "nzbgetMinVersion": "24.0",
     "author": "ТΞNSΛI",
     "license": "MIT",
@@ -47,6 +47,16 @@
             "value": "force",
             "description": ["Sets the duplicate mode for the added NZB files."],
             "select": ["score", "force", "all"]
+        },
+        {
+            "name": "NameSuffix",
+            "displayName": "Name Suffix",
+            "value": "added by AddNZBs",
+            "description": [
+                "Suffix that is appended to the name of the added NZB file.",
+                "Prevents the download of the added NZB from being placed in the same destination folder if the name is identical to the original NZB file and thus prevents the same NZB file from being added again and again if 'Delete added NZBs' is set to 'No'."
+            ],
+            "select": []
         },
         {
             "name": "DelAddedNZBs",

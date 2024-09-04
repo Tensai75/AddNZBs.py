@@ -127,6 +127,8 @@ for r, d, f in os.walk(os.environ.get('NZBPP_DIRECTORY')):
             else:
                 # if not, set the category to empty
                 nzbcategory = ''
+            # Add suffix to the nzb name
+            nzbname = (nzbname + " " + os.environ.get('NZBOP_ADDNZBS_NAMESUFFIX', "").strip()).strip()
             # push the NZB file to NZBGet
             nzbid = addLocalFileToNZBGet(nzbname + '.nzb', nzbpath, nzbcategory, nzbpassword)
             # check if the push was successfull
