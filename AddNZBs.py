@@ -28,7 +28,7 @@ import sys
 import os
 import re
 import base64
-from urllib.request import quote
+from urllib.parse import quote
 from xmlrpc.client import ServerProxy
 
 # priorities options
